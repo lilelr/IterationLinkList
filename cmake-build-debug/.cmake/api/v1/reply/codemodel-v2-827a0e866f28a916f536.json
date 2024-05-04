@@ -1,0 +1,122 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "1",
+					"jsonFile" : "directory-1-Debug-e6da00f5af19ca69ac9e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "1",
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				},
+				{
+					"build" : "2",
+					"jsonFile" : "directory-2-Debug-c59b3ddc43b5d3e1d441.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "2",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "IterationLinkList",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "IterationLinkList::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-IterationLinkList-Debug-1802dbe2ede658e4d8a3.json",
+					"name" : "IterationLinkList",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "graph_main::@b1b1bd1ed240b1496c81",
+					"jsonFile" : "target-graph_main-Debug-b02f531a3fcec0f7cc99.json",
+					"name" : "graph_main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "index_pq::@67b176705b4620661421",
+					"jsonFile" : "target-index_pq-Debug-78507bc45c13b9b64788.json",
+					"name" : "index_pq",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "indexed_priority_queue_min_heap::@67b176705b4620661421",
+					"jsonFile" : "target-indexed_priority_queue_min_heap-Debug-74b70bf6cc5e13f84611.json",
+					"name" : "indexed_priority_queue_min_heap",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/ClionProjects/IterationLinkList/cmake-build-debug",
+		"source" : "D:/ClionProjects/IterationLinkList"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

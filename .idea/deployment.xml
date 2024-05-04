@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="slave4 (c33c1235-7ff6-4d1c-830e-3760b6e50e38)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.yvudoUutZO" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="veriton (7bf85378-6f1c-4d05-a531-c15613f45a13)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.uKjBNEmrgy" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

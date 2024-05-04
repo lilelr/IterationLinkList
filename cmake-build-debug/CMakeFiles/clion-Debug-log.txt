@@ -1,0 +1,7 @@
+"D:\softwares\CLion2023\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/softwares/CLion2023/CLion 2023.3.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S D:\ClionProjects\IterationLinkList -B D:\ClionProjects\IterationLinkList\cmake-build-debug
+D:/ClionProjects/IterationLinkList
+D:/ClionProjects/IterationLinkList/1
+D:/ClionProjects/IterationLinkList
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: D:/ClionProjects/IterationLinkList/cmake-build-debug
