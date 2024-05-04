@@ -36,6 +36,33 @@ class IndexPriorityQueue {
 
  private:
   // TODO: you may want to add your own member functions. swim? sink?
+
+    void swap(int i, int j) {
+        std::swap(priorityQueue[i], priorityQueue[j]);
+        indexToPosition[priorityQueue[i]] = i;
+        indexToPosition[priorityQueue[j]] = j;
+    }
+
+  void swim(int i) {
+      while (i > 0 && priorities[priorityQueue[i]] < priorities[priorityQueue[i / 2]]) {
+          swap(i, i / 2);
+          i /= 2;
+      }
+  }
+
+    void sink(int i) {
+        while (2 * i <= size_) {
+            int j = 2 * i;
+            if (j < size_ && priorities[priorityQueue[j]] > priorities[priorityQueue[j + 1]]) {
+                j++;  // choose the smaller one
+            }
+            if (priorities[priorityQueue[i]] <= priorities[priorityQueue[j]]) {
+                break;
+            }
+            swap(i, j);
+            i = j;
+        }
+    }
 };
 
 // Useful helper functions
@@ -54,43 +81,96 @@ int parent(int i) {
 // IndexPriorityQueue member functions
 template <typename T>
 IndexPriorityQueue<T>::IndexPriorityQueue(int N) {
+    for(int i=0;i<N;i++){
+        this->priorities.push_back({});
+        this->indexToPosition.push_back(-1);
+    }
+    this->size_=0;
+//    this->priorities= {N,-1};
+////    this->priorityQueue(N,-1);
+//    this->indexToPositionN,-1);
 }
 
 template <typename T>
 bool IndexPriorityQueue<T>::empty() const {
-  return true;
+    if(this->size_<=0){
+        return true;
+    }
+  return false;
 }
 
 template <typename T>
 int IndexPriorityQueue<T>::size() const {
-  return 0;
+  return this->priorityQueue.size();
 }
 
 template <typename T>
 void IndexPriorityQueue<T>::push(const T& priority, int index) {
+    if(indexToPosition[index]==-1){ // the target index does not exist
+        priorities[index] = priority;
+        indexToPosition[index] = size_;
+        priorityQueue.push_back(index);
+        swim(size_);
+        size_++;
+    }
 }
 
 template <typename T>
 void IndexPriorityQueue<T>::pop() {
+    if (size_ <=0) {
+        std::cerr << "Heap underflow!" << std::endl;
+
+    }
+    int minIndex = priorityQueue[0];
+    swap(0, size_-1); // exchange the top one with the last one
+    sink(0);
+    indexToPosition[minIndex] = -1; // Mark as invalid
+//    priorityQueue[minIndex] = -1; // Optional: Clear data
+//    return minIndex;
+    size_--;
 }
 
 template <typename T>
 void IndexPriorityQueue<T>::erase(int index) {
+    if(indexToPosition[index]!=-1){ // the target index  exists
+        int target_position = indexToPosition[index];
+        swap(target_position, size_--);
+        sink(target_position);
+        indexToPosition[index]=-1;
+    }
 }
 
 template <typename T>
 std::pair<T, int> IndexPriorityQueue<T>::top() const {
-  return {T {}, 0};
+    int top_index = priorityQueue[0];
+    T a(priorities[top_index]);
+
+  return {a, top_index};
 }
 
 // if vertex i is not present, insert it with key
 // otherwise change the associated key value of i to key
 template <typename T>
 void IndexPriorityQueue<T>::changeKey(const T& key, int index) {
+    if(contains(index)){
+        T oldPriority = priorities[index];
+        priorities[index] = key;
+        if (key < oldPriority) {// less than , go up
+            swim(indexToPosition[index]);
+        } else {
+            sink(indexToPosition[index]);
+        }
+    }else{
+        push(key, index);
+    }
 }
 
 template <typename T>
 bool IndexPriorityQueue<T>::contains(int index) const {
+    if(indexToPosition[index]!=-1) { // the target index  exists
+        return true;
+    }
+    return false;
 }
 
 
