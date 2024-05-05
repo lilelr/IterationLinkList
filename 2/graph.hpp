@@ -132,7 +132,25 @@ std::ostream& operator<<(std::ostream& out, const Graph<T>& G) {
 
 template <typename T>
 bool isSubgraph(const Graph<T>& H, const Graph<T>& G) {
-  return true;
+    int h_size = H.size();
+    int g_size = G.size();
+    if(h_size <= 0 || h_size > g_size ) return false;
+
+    bool is_sub=true;
+//    int h_edges=0;
+    for(int i=0;i<h_size;i++){
+        for(const auto &[neighbour, weight]: *(H.neighbours(i))){
+            if(G.isEdge(i,neighbour)){
+                if(G.getEdgeWeight(i, neighbour) != weight){
+                    is_sub= false;
+                }
+            }else {
+                is_sub = false;
+            }
+        }
+    }
+
+  return is_sub;
 }
 
 template <typename T>
