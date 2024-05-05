@@ -152,10 +152,43 @@ bool isSubgraph(const Graph<T>& H, const Graph<T>& G) {
 
   return is_sub;
 }
+template <typename T>
+void dfs(const Graph<T>& G, int cur, std::vector<int>& visited_vertices){
+    visited_vertices[cur]++;
+    if(visited_vertices[cur]>1){
+        return;
+    }
+
+    for(const auto &[neighbour, weight]: *(G.neighbours(cur))){
+        dfs(G,neighbour,visited_vertices);
+    }
+
+
+}
+
 
 template <typename T>
 bool isTreePlusIsolated(const Graph<T>& G, int root) {
-  return true;
+    std::vector<int> visited_vertices(G.size(),0);
+    dfs(G,root,visited_vertices);
+    bool result = true;
+    for(int i=0;i<visited_vertices.size();i++){
+//        printf("i = %d, visited_vertices[i] is %d \n",i, visited_vertices[i]);
+        if(visited_vertices[i]==0){
+            // unreachable
+            bool isolated=true;
+            for(const auto &[neighbour, weight]: *(G.neighbours(i))){
+                    isolated=false;
+            }
+            if(!isolated){
+                result=false;
+            }
+        }else if (visited_vertices[i]>1){
+            result=false; // undirected cycle
+        }
+    }
+
+  return result;
 }
 
 template <typename T>
