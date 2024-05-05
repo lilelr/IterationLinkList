@@ -193,7 +193,30 @@ bool isTreePlusIsolated(const Graph<T>& G, int root) {
 
 template <typename T>
 std::vector<T> pathLengthsFromRoot(const Graph<T>& tree, int root) {
-  std::vector<T> bestDistanceTo(tree.size());  
+  std::vector<T> bestDistanceTo(tree.size());
+   std::queue<int> queue;
+    std::vector<T> visited(tree.size(),0);
+    queue.push(root);
+    while (!queue.empty()){
+
+        int first = queue.front();
+        queue.pop();
+//    remove(queue.)
+        for(const auto &[neighbour, weight]: *(tree.neighbours(first))){
+            int cur_len = bestDistanceTo[first] + weight;
+            if(visited[neighbour]==0){
+                // first visit
+                bestDistanceTo[neighbour] = cur_len;
+                visited[neighbour]++;
+            }else{
+                if(bestDistanceTo[neighbour] > cur_len){
+                    bestDistanceTo[neighbour] = cur_len;
+                }
+            }
+            queue.push(neighbour);
+        }
+    }
+
   return bestDistanceTo;
 }
 
