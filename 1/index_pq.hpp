@@ -67,10 +67,10 @@ class IndexPriorityQueue {
   }
 
     void sink(int i) {
-       int last_index= size_-2; // size-1 is the index to store the exchanged element
-        while (2 * i < last_index) {
+       int last_index= size_-1; // size-1 is the index to store the exchanged element
+        while (2 * i <= last_index) {
             int j = 2 * i;
-            if (j < last_index && j+1<= last_index && priorities[priorityQueue[j]] > priorities[priorityQueue[j + 1]]) {
+            if (j <= last_index && j+1<= last_index && priorities[priorityQueue[j]] > priorities[priorityQueue[j + 1]]) {
                 j++;  // choose the smaller one
             }
             if (priorities[priorityQueue[i]] <= priorities[priorityQueue[j]]) {
@@ -142,12 +142,14 @@ void IndexPriorityQueue<T>::pop() {
 
     }
     int minIndex = priorityQueue[0];
+
     swap(0, size_-1); // exchange the top one with the last one
+    size_--;
     sink(0);
     indexToPosition[minIndex] = -1; // Mark as invalid
 //    priorityQueue[minIndex] = -1; // Optional: Clear data
 //    return minIndex;
-    size_--;
+
 }
 
 template <typename T>
@@ -155,9 +157,10 @@ void IndexPriorityQueue<T>::erase(int index) {
     if(indexToPosition[index]!=-1){ // the target index  exists
         int target_position = indexToPosition[index];
         swap(target_position, size_-1);
+        size_--;
         sink(target_position);
         indexToPosition[index]=-1;
-        size_--;
+
     }
 }
 
@@ -188,7 +191,7 @@ void IndexPriorityQueue<T>::changeKey(const T& key, int index) {
 
 template <typename T>
 bool IndexPriorityQueue<T>::contains(int index) const {
-    if(index>= size_ || index <0) return false;
+    if(index>= indexToPosition.size() || index <0) return false;
     if(indexToPosition[index]!=-1) { // the target index  exists
         return true;
     }
