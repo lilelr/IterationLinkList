@@ -93,12 +93,14 @@ TEST(IndexPriorityQueueTest, pushAndPop) {
   heap.push(2, 3);
   heap.push(1, 1);
   heap.push(3, 2);
+//  heap.output_priorities();
   ASSERT_EQ(heap.top().first, 1);
   ASSERT_EQ(heap.top().second, 1);
   heap.pop();
   ASSERT_EQ(heap.top().first, 2);
   ASSERT_EQ(heap.top().second, 3);
   heap.pop();
+//    heap.output_priorities();
   ASSERT_EQ(heap.top().first, 3);
   ASSERT_EQ(heap.top().second, 2);
   heap.pop();

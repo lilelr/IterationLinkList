@@ -33,6 +33,12 @@ class IndexPriorityQueue {
   std::pair<T, int> top() const;
   bool empty() const;
   int size() const;
+  void output_priorities(){
+      printf("\n");
+      for(int i=0;i<this->size_;i++){
+          printf("i is %d ,  priority is   %d, index is %d\n", i,  priorities[priorityQueue[i]],priorityQueue[i]);
+      }
+  }
 
  private:
   // TODO: you may want to add your own member functions. swim? sink?
@@ -44,6 +50,16 @@ class IndexPriorityQueue {
     }
 
   void swim(int i) {
+//      if(i==3){
+//          int c = 3;
+//      }
+      if(i%2==1){
+          int pre= i-1;
+          if(priorities[priorityQueue[pre]] > priorities[priorityQueue[i]]){
+              swap(i, pre);
+              i = pre;
+          }
+      }
       while (i > 0 && priorities[priorityQueue[i]] < priorities[priorityQueue[i / 2]]) {
           swap(i, i / 2);
           i /= 2;
@@ -51,9 +67,10 @@ class IndexPriorityQueue {
   }
 
     void sink(int i) {
-        while (2 * i <= size_) {
+       int last_index= size_-2; // size-1 is the index to store the exchanged element
+        while (2 * i < last_index) {
             int j = 2 * i;
-            if (j < size_ && priorities[priorityQueue[j]] > priorities[priorityQueue[j + 1]]) {
+            if (j < last_index && j+1<= last_index && priorities[priorityQueue[j]] > priorities[priorityQueue[j + 1]]) {
                 j++;  // choose the smaller one
             }
             if (priorities[priorityQueue[i]] <= priorities[priorityQueue[j]]) {
@@ -101,15 +118,18 @@ bool IndexPriorityQueue<T>::empty() const {
 
 template <typename T>
 int IndexPriorityQueue<T>::size() const {
-  return this->priorityQueue.size();
+  return this->size_;
 }
 
 template <typename T>
 void IndexPriorityQueue<T>::push(const T& priority, int index) {
     if(indexToPosition[index]==-1){ // the target index does not exist
         priorities[index] = priority;
-        indexToPosition[index] = size_;
         priorityQueue.push_back(index);
+//        if (size_==3){
+//            printf("eew\n");
+//        }
+        indexToPosition[index]=size_;
         swim(size_);
         size_++;
     }
@@ -134,9 +154,10 @@ template <typename T>
 void IndexPriorityQueue<T>::erase(int index) {
     if(indexToPosition[index]!=-1){ // the target index  exists
         int target_position = indexToPosition[index];
-        swap(target_position, size_--);
+        swap(target_position, size_-1);
         sink(target_position);
         indexToPosition[index]=-1;
+        size_--;
     }
 }
 
@@ -167,6 +188,7 @@ void IndexPriorityQueue<T>::changeKey(const T& key, int index) {
 
 template <typename T>
 bool IndexPriorityQueue<T>::contains(int index) const {
+    if(index>= size_ || index <0) return false;
     if(indexToPosition[index]!=-1) { // the target index  exists
         return true;
     }
