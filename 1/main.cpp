@@ -126,13 +126,13 @@ TEST(IndexPriorityQueueTest, increaseKey) {
   heap.push(2, 0);
   heap.push(3, 3);
   heap.push(4, 1);
-    heap.output_priorities();
+//    heap.output_priorities();
   heap.changeKey(5, 2);
-    heap.output_priorities();
+//    heap.output_priorities();
   ASSERT_EQ(heap.top().first, 2);
   ASSERT_EQ(heap.top().second, 0);
   heap.pop();
-  heap.output_priorities();
+//  heap.output_priorities();
   ASSERT_EQ(heap.top().first, 3);
   ASSERT_EQ(heap.top().second, 3);
   heap.pop();
@@ -155,7 +155,7 @@ TEST(IndexPriorityQueueTest, changeKeyToInsert) {
   ASSERT_EQ(heap.top().first, 0);
   ASSERT_EQ(heap.top().second, 3);
   heap.changeKey(2, 3);
-    heap.output_priorities();
+//    heap.output_priorities();
 
     ASSERT_EQ(heap.top().first, 1);
   ASSERT_EQ(heap.top().second, 2);
@@ -303,9 +303,13 @@ TEST(IndexPriorityQueueTest, operationsOnPrioritiesSmall) {
 //  std::sort(priorities.begin(), priorities.end());
   std::sort(priorities.begin(), priorities.end());
   MyInteger::clearCounts();
+    MyInteger::printCounts();
   for (const auto& x : priorities) {
     ASSERT_EQ(x, heap.top().first);
     heap.pop();
+      printf("-------------\n");
+      MyInteger::printCounts();
+
   }
   ASSERT_LE(MyInteger::assignmentCount, N);
   ASSERT_LE(MyInteger::copyCount, N);

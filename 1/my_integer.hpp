@@ -51,6 +51,9 @@ struct MyInteger {
     equalityCount = 0;
     comparisonCount = 0;
   }
+    static void print_counts() {
+        printf(" constructorCount is %d, copyCount is %d, assignmentCount is %d \n", constructorCount, copyCount, assignmentCount);
+  }
 
   friend bool operator==(const MyInteger& x, const MyInteger& y) {
     ++equalityCount;

@@ -144,6 +144,7 @@ void IndexPriorityQueue<T>::pop() {
     int minIndex = priorityQueue[0];
 
     swap(0, size_-1); // exchange the top one with the last one
+    priorityQueue.pop_back();
     size_--;
     sink(0);
     indexToPosition[minIndex] = -1; // Mark as invalid
@@ -156,7 +157,8 @@ template <typename T>
 void IndexPriorityQueue<T>::erase(int index) {
     if(indexToPosition[index]!=-1){ // the target index  exists
         int target_position = indexToPosition[index];
-        swap(target_position, size_-1);
+        swap(target_position, size_-1); // exchange the item with the last one
+        priorityQueue.pop_back();
         size_--;
         sink(target_position);
         indexToPosition[index]=-1;
@@ -167,9 +169,9 @@ void IndexPriorityQueue<T>::erase(int index) {
 template <typename T>
 std::pair<T, int> IndexPriorityQueue<T>::top() const {
     int top_index = priorityQueue[0];
-    T a(priorities[top_index]);
+//    T a(priorities[top_index]);
 
-  return {a, top_index};
+  return {priorities[top_index], top_index};
 }
 
 // if vertex i is not present, insert it with key
