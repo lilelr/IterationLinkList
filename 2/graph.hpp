@@ -13,6 +13,8 @@
 #include <limits>
 #include <stdexcept>
 
+#include "my_integer.hpp"
+
 template <typename T>
 class Graph {
  private:
@@ -221,9 +223,41 @@ std::vector<T> pathLengthsFromRoot(const Graph<T>& tree, int root) {
 }
 
 template <typename T>
+T infinity(){
+    if(std::numeric_limits<T>::has_infinity){
+        return std::numeric_limits<T>::infinity();
+    }else if constexpr (std::is_same_v<T, MyInteger>){
+        return MyInteger {std::numeric_limits<int>::max()};
+    }else {
+        return std::numeric_limits<T>::max();
+    }
+}
+
+template <typename T>
 bool allEdgesRelaxed(const std::vector<T>& bestDistanceTo, const Graph<T>& G, 
                       int source) {
-  return true;
+    int g_size = G.size();
+
+    if(bestDistanceTo.at(source) !=0) return false;
+    bool result=true;
+//    int h_edges=0;
+    for(int k=0;k<bestDistanceTo.size();k++){
+        int dest =k;
+        if(dest==source) continue;
+        for(int i=0;i<g_size;i++){
+            for(const auto &[neighbour, weight]: *(G.neighbours(i))){
+                if(G.isEdge(i,neighbour)){
+                    if(neighbour == dest){
+                      if(bestDistanceTo.at(dest) > bestDistanceTo.at(i) + G.getEdgeWeight(i,dest)){
+//                          bestDistanceTo.at(dest) =  bestDistanceTo.at(i) + G.getEdgeWeight(i,dest);
+                          result = false;
+                      }
+                    }
+                }
+            }
+        }
+    }
+  return result;
 }
 
 #endif      // GRAPH_HPP_
