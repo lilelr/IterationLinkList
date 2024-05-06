@@ -25,7 +25,10 @@ TEST(DijkstraTest, distanceFrom0LazyMyInteger) {
   Graph<MyInteger> G {"tinyEWD.txt"};
   // set all counts to 0 before running shortest path algorithm
   MyInteger::clearCounts();
-  std::vector<MyInteger> result = singleSourceLazyDistance<MyInteger>(G, 0);
+//  std::vector<MyInteger> result = singleSourceLazyDistance<MyInteger>(G, 0);
+// lele
+//  std::vector<MyInteger> result = singleSourceLazyDisLele<MyInteger>(G, 0);
+  std::vector<MyInteger> result = singleSourceSet<MyInteger>(G, 0);
   // see how many operations on MyInteger the algorithm made
   MyInteger::printCounts();
   EXPECT_EQ(result[0], MyInteger {0});

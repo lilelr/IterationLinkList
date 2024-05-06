@@ -9,3 +9,13 @@
 4	3308	7366734884259991	2/CMakeFiles/graph_main.dir/main.cpp.obj	f15ac7b56fe8f5cd
 1	636	7364963414911209	1/CMakeFiles/indexed_priority_queue_min_heap.dir/indexed_priority_queue_min_heap.cpp.obj	9edf8647f706960a
 636	947	7364963417948664	1/indexed_priority_queue_min_heap.exe	11b39b49ff6dd8dc
+0	2217	7366853649007554	3/CMakeFiles/distra.dir/main.cpp.obj	fd624014a676c3a9
+2217	2645	7366853653206844	3/distra.exe	8f946d0ead1cb8ee
+4	2229	7366859166652086	3/CMakeFiles/distra.dir/main.cpp.obj	fd624014a676c3a9
+2229	2603	7366859170242141	3/distra.exe	8f946d0ead1cb8ee
+5	2128	7366859758046920	3/CMakeFiles/distra.dir/main.cpp.obj	fd624014a676c3a9
+2128	2479	7366859761467804	3/distra.exe	8f946d0ead1cb8ee
+4	2516	7366861304398849	3/CMakeFiles/distra.dir/main.cpp.obj	fd624014a676c3a9
+2517	2975	7366861308869784	3/distra.exe	8f946d0ead1cb8ee
+3	2352	7366907007135653	3/CMakeFiles/distra.dir/main.cpp.obj	fd624014a676c3a9
+2353	2800	7366907011534860	3/distra.exe	8f946d0ead1cb8ee

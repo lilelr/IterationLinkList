@@ -196,13 +196,135 @@ Graph<T> singleSourceIndex(const Graph<T>& G, int source) {
 // Implement your lazy solution using std::priority_queue here
 template <typename T>
 Graph<T> singleSourceLazy(const Graph<T>& G, int source) {
-  return Graph<T> {G.size()};
+    int n = G.size();
+    Graph<T> h {n};
+    std::vector<T> dist(n,infinity<T>());
+    dist[source] = T {};
+    std::vector<int> pre_index(n,-1);
+    pre_index[source] = source; // record the node previous to the current node
+    std::vector<int> vis(n, false);
+    std::priority_queue<std::pair<T,int>,std::vector<std::pair<T,int>>, std::greater<std::pair<T,int>>> pq;
+    pq.push({T {},source});
+    while (! pq.empty()){
+        int current= pq.top().second;
+        pq.pop();
+        if(vis[current]) continue; // not first extraction
+        vis[current]=true;
+        // relax all outgoing edges of current
+        for (const auto& [neighbour, weight] : *(G.neighbours(current))) {
+            T distanceViaCurrent = dist.at(current) + weight;
+            if (dist.at(neighbour) > distanceViaCurrent) {
+                dist.at(neighbour) = distanceViaCurrent;
+                // lazy dijkstra: nextPoint could already be in the queue
+                // we don't update it with better distance just found.
+                pq.push({distanceViaCurrent, neighbour});
+                pre_index[neighbour] = current;
+            }
+        }
+    }
+
+    // construct the shortest path tree h containing shortest paths in G from the source vertex to every other vertex
+    for(int i=0;i<n;i++){
+        int cur = i;
+        int pre = pre_index[cur];
+        while (pre!=cur){
+            if(! h.isEdge(pre, cur)){
+                h.addEdge(pre, cur,G.getEdgeWeight(pre,cur));
+            }
+            cur = pre;
+        }
+    }
+
+  return h;
+}
+
+// Implement your lazy solution using std::priority_queue here
+template <typename T>
+std::vector<T> singleSourceLazyDisLele(const Graph<T>& G, int source) {
+    int n = G.size();
+    Graph<T> h {n};
+    std::vector<T> dist(n,infinity<T>());
+    dist[source] = T {};
+    std::vector<int> pre_index(n,-1);
+    pre_index[source] = source; // record the node previous to the current node
+    std::vector<int> vis(n, false);
+    std::priority_queue<std::pair<T,int>,std::vector<std::pair<T,int>>, std::greater<std::pair<T,int>>> pq;
+    pq.push({T {},source});
+    while (! pq.empty()){
+        int current= pq.top().second;
+        pq.pop();
+        if(vis[current]) continue; // not first extraction
+        vis[current]=true;
+        // relax all outgoing edges of current
+        for (const auto& [neighbour, weight] : *(G.neighbours(current))) {
+            T distanceViaCurrent = dist.at(current) + weight;
+            if (dist.at(neighbour) > distanceViaCurrent) {
+                dist.at(neighbour) = distanceViaCurrent;
+                // lazy dijkstra: nextPoint could already be in the queue
+                // we don't update it with better distance just found.
+                pq.push({distanceViaCurrent, neighbour});
+                pre_index[neighbour] = current;
+            }
+        }
+    }
+
+    // construct the shortest path tree h containing shortest paths in G from the source vertex to every other vertex
+    for(int i=0;i<n;i++){
+        int cur = i;
+        int pre = pre_index[cur];
+        while (pre!=cur){
+            if(! h.isEdge(pre, cur)){
+                h.addEdge(pre, cur,G.getEdgeWeight(pre,cur));
+            }
+            cur = pre;
+        }
+    }
+
+    return dist;
 }
 
 // Implement your solution using std::set here
 template <typename T>
-Graph<T> singleSourceSet(const Graph<T>& G, int source) {
-  return Graph<T> {G.size()};
+std::vector<T> singleSourceSet(const Graph<T>& G, int source) {
+    int n = G.size();
+    Graph<T> h {n};
+    std::vector<T> dist(n,infinity<T>());
+    dist[source] = T {};
+    std::vector<int> pre_index(n,-1);
+    pre_index[source] = source; // record the node previous to the current node
+    std::set<std::pair<T,int>> pq;
+    pq.insert({T {},source});
+    while (! pq.empty()){
+        int current= pq.begin()->second;
+        pq.erase(pq.begin());
+
+        // relax all outgoing edges of current
+        for (const auto& [neighbour, weight] : *(G.neighbours(current))) {
+            T distanceViaCurrent = dist.at(current) + weight;
+            if (dist.at(neighbour) > distanceViaCurrent) {
+                dist.at(neighbour) = distanceViaCurrent;
+
+                // erase and insert instead of change-priority
+                pq.erase({dist.at(neighbour), neighbour});
+                pq.insert({distanceViaCurrent, neighbour});
+                pre_index[neighbour] = current;
+            }
+        }
+    }
+
+    // construct the shortest path tree h containing shortest paths in G from the source vertex to every other vertex
+    for(int i=0;i<n;i++){
+        int cur = i;
+        int pre = pre_index[cur];
+        while (pre!=cur){
+            if(! h.isEdge(pre, cur)){
+                h.addEdge(pre, cur,G.getEdgeWeight(pre,cur));
+            }
+            cur = pre;
+        }
+    }
+
+    return dist;
 }
 
 // put your "best" solution here
