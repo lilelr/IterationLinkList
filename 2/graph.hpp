@@ -13,7 +13,7 @@
 #include <limits>
 #include <stdexcept>
 
-#include "my_integer.hpp"
+
 
 template <typename T>
 class Graph {
@@ -222,16 +222,7 @@ std::vector<T> pathLengthsFromRoot(const Graph<T>& tree, int root) {
   return bestDistanceTo;
 }
 
-template <typename T>
-T infinity(){
-    if(std::numeric_limits<T>::has_infinity){
-        return std::numeric_limits<T>::infinity();
-    }else if constexpr (std::is_same_v<T, MyInteger>){
-        return MyInteger {std::numeric_limits<int>::max()};
-    }else {
-        return std::numeric_limits<T>::max();
-    }
-}
+
 
 template <typename T>
 bool allEdgesRelaxed(const std::vector<T>& bestDistanceTo, const Graph<T>& G, 

@@ -155,6 +155,9 @@
 		},
 		{
 			"path" : "2/CMakeLists.txt"
+		},
+		{
+			"path" : "3/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",

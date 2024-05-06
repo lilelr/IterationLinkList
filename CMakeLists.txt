@@ -16,6 +16,7 @@ link_directories(
 
 add_subdirectory(1)
 add_subdirectory(2)
+add_subdirectory(3)
 
 #设置要编译的文件的名称，即src下面所有的.cpp文件都需要编译，他们整体取了个名字叫src_files
 #file(GLOB_RECURSE src_files
