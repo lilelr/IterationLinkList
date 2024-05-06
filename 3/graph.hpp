@@ -189,8 +189,53 @@ std::vector<T> singleSourceLazyDistance(const Graph<T>& G, int source) {
 
 // Implement your solution using an index priority queue here
 template <typename T>
-Graph<T> singleSourceIndex(const Graph<T>& G, int source) {
-  return Graph<T> {G.size()};
+Graph<T>  singleSourceIndex(const Graph<T>& G, int source) {
+    int n = G.size();
+    Graph<T> h {n};
+    std::vector<T> dist(n,infinity<T>());
+    std::map<int, T> posMap; // to keep track of position in the heap
+    dist[source] = T {};
+    std::vector<int> pre_index(n,-1);
+    pre_index[source] = source; // record the node previous to the current node
+    std::priority_queue<std::pair<T,int>,std::vector<std::pair<T,int>>, std::greater<std::pair<T,int>>> pq;
+    pq.push({T {},source});
+    while (! pq.empty()){
+        int current= pq.top().second;
+        pq.pop();
+
+        // relax all outgoing edges of current
+        for (const auto& [neighbour, weight] : *(G.neighbours(current))) {
+            T distanceViaCurrent = dist.at(current) + weight;
+            if (dist.at(neighbour) > distanceViaCurrent) {
+                dist.at(neighbour) = distanceViaCurrent;
+
+                // if neighbour already in the heap, we need
+                if(posMap.find(neighbour) != posMap.end()){
+//                    pq[0]=dist.at(neighbour);
+                    pq.push({dist.at(neighbour), neighbour});
+                }else{
+                    // first time
+                    pq.push({dist.at(neighbour), neighbour});
+                    posMap[neighbour]= dist.at(neighbour); // Record its position
+                }
+                pre_index[neighbour] = current;
+            }
+        }
+    }
+
+    // construct the shortest path tree h containing shortest paths in G from the source vertex to every other vertex
+    for(int i=0;i<n;i++){
+        int cur = i;
+        int pre = pre_index[cur];
+        while (pre!=cur){
+            if(! h.isEdge(pre, cur)){
+                h.addEdge(pre, cur,G.getEdgeWeight(pre,cur));
+            }
+            cur = pre;
+        }
+    }
+
+    return h;
 }
 
 // Implement your lazy solution using std::priority_queue here
@@ -285,7 +330,7 @@ std::vector<T> singleSourceLazyDisLele(const Graph<T>& G, int source) {
 
 // Implement your solution using std::set here
 template <typename T>
-std::vector<T> singleSourceSet(const Graph<T>& G, int source) {
+Graph<T> singleSourceSet(const Graph<T>& G, int source) {
     int n = G.size();
     Graph<T> h {n};
     std::vector<T> dist(n,infinity<T>());
@@ -324,7 +369,7 @@ std::vector<T> singleSourceSet(const Graph<T>& G, int source) {
         }
     }
 
-    return dist;
+    return h;
 }
 
 // put your "best" solution here
